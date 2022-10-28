@@ -1,70 +1,65 @@
+
+"""
+Simple Bot to reply to Telegram messages taken from the python-telegram-bot examples.
+Source: https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/echobot2.py
+"""
+
 import os
-import telebot
-import yfinance as yf
+import logging
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-API_KEY = os.getenv('API_KEY')
-bot = telebot.TeleBot(API_KEY)
+# Enable logging
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
 
+logger = logging.getLogger(__name__)
+TOKEN = os.getenv('API_KEY')
 
-@bot.message_handler(commands=['Greet'])
-def greet(message):
-    bot.reply_to(message, "Hey! Hows it going?")
+# Define a few command handlers. These usually take the two arguments update and
+# context. Error handlers also receive the raised TelegramError object in error.
+def start(update, context):
+    """Send a message when the command /start is issued."""
+    update.message.reply_text('Hi!')
 
+def help(update, context):
+    """Send a message when the command /help is issued."""
+    update.message.reply_text('Help!')
 
-@bot.message_handler(commands=['hello'])
-def hello(message):
-    bot.send_message(message.chat.id, "Hello!")
+def echo(update, context):
+    """Echo the user message."""
+    update.message.reply_text(update.message.text)
 
+def error(update, context):
+    """Log Errors caused by Updates."""
+    logger.warning('Update "%s" caused error "%s"', update, context.error)
 
-@bot.message_handler(commands=['wsb'])
-def get_stocks(message):
-    response = ""
-    stocks = ['gme', 'amc', 'nok']
-    stock_data = []
-    for stock in stocks:
-        data = yf.download(tickers=stock, period='2d', interval='1d')
-        data = data.reset_index()
-        response += f"-----{stock}-----\n"
-        stock_data.append([stock])
-        columns = ['stock']
-        for index, row in data.iterrows():
-            stock_position = len(stock_data) - 1
-            price = round(row['Close'], 2)
-            format_date = row['Date'].strftime('%m/%d')
-            response += f"{format_date}: {price}\n"
-            stock_data[stock_position].append(price)
-            columns.append(format_date)
-        print()
+def main():
+    """Start the bot."""
+    # Create the Updater and pass it your bot's token.
+    # Make sure to set use_context=True to use the new context based callbacks
+    # Post version 12 this will no longer be necessary
+    updater = Updater(TOKEN, use_context=True)
 
-    response = f"{columns[0] : <10}{columns[1] : ^10}{columns[2] : >10}\n"
-    for row in stock_data:
-        response += f"{row[0] : <10}{row[1] : ^10}{row[2] : >10}\n"
-    response += "\nStock Data"
-    print(response)
-    bot.send_message(message.chat.id, response)
+    # Get the dispatcher to register handlers
+    dp = updater.dispatcher
 
+    # on different commands - answer in Telegram
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("help", help))
 
-def stock_request(message):
-    request = message.text.split()
-    if len(request) < 2 or request[0].lower() not in "price":
-        return False
-    else:
-        return True
+    # on noncommand i.e message - echo the message on Telegram
+    dp.add_handler(MessageHandler(Filters.text, echo))
 
+    # log all errors
+    dp.add_error_handler(error)
 
-@bot.message_handler(func=stock_request)
-def send_price(message):
-    request = message.text.split()[1]
-    data = yf.download(tickers=request, period='5m', interval='1m')
-    if data.size > 0:
-        data = data.reset_index()
-        data["format_date"] = data['Datetime'].dt.strftime('%m/%d %I:%M %p')
-        data.set_index('format_date', inplace=True)
-        print(data.to_string())
-        bot.send_message(
-            message.chat.id, data['Close'].to_string(header=False))
-    else:
-        bot.send_message(message.chat.id, "No data!?")
+    # Start the Bot
+    updater.start_polling()
 
+    # Run the bot until you press Ctrl-C or the process receives SIGINT,
+    # SIGTERM or SIGABRT. This should be used most of the time, since
+    # start_polling() is non-blocking and will stop the bot gracefully.
+    updater.idle()
 
-bot.polling()
+if __name__ == '__main__':
+    main()
