@@ -9,7 +9,7 @@ import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 
-# Enable logging
+# Ativando os logs
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
@@ -17,22 +17,23 @@ logger = logging.getLogger(__name__)
 PORT = int(os.environ.get('PORT', 8443))
 TOKEN = os.environ['TOKEN']
 
-# Define a few command handlers. These usually take the two arguments update and
-# context. Error handlers also receive the raised TelegramError object in error.
+# Defina alguns manipuladores de comandos. Estes geralmente levam a atualização de dois argumentos e
+# contexto. Os manipuladores de erro também recebem o objeto TelegramError gerado com erro.
+
 def hello(update, context):
-    """Send a message when the command /start is issued."""
-    update.message.reply_text('Hi!')
+    # Responde quando o comando /hello é enviado
+    update.message.reply_text('Hey!\nNosso servidor está ligado, eu estou vivo 🫡')
 
 def help(update, context):
-    """Send a message when the command /help is issued."""
+    # Responde quando o comando /help é enviado
     update.message.reply_text('Help!')
 
 def echo(update, context):
-    """Echo the user message."""
+    # Repete a mensagem enviada pelo usuario
     update.message.reply_text(update.message.text)
 
 def error(update, context):
-    """Log Errors caused by Updates."""
+    #Erros de log causados ​​por atualizações.
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 def main():
