@@ -28,6 +28,15 @@ def help(update, context):
     # Responde quando o comando /help é enviado
     update.message.reply_text('Help!')
 
+def cnpj(update, context):
+    # Retornando os dados do CNPJ informado
+
+    cnpj =  " ".join(context.args)
+    #url = 'https://publica.cnpj.ws/cnpj/27865757000102'
+
+    update.message.reply_text('cnpj')
+
+
 def echo(update, context):
     # Repete a mensagem enviada pelo usuario
     update.message.reply_text(update.message.text)
@@ -49,6 +58,7 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("hello", hello))
     dp.add_handler(CommandHandler("help", help))
+    dp.add_handler(CommandHandler('cnpj', cnpj))
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, echo))
