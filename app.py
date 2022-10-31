@@ -6,7 +6,6 @@ Source: https://github.com/python-telegram-bot/python-telegram-bot/blob/master/e
 
 import os
 import logging
-from turtle import update
 import requests
 import json
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
