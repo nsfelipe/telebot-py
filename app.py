@@ -7,7 +7,6 @@ Source: https://github.com/python-telegram-bot/python-telegram-bot/blob/master/e
 import os
 import logging
 import requests
-import pandas as pd
 import json
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
