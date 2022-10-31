@@ -30,7 +30,7 @@ def help(update, context):
     # Responde quando o comando /help é enviado
     update.message.reply_text('Help!')
 
-def handle_response(text: str, update) -> str:
+def handle_response(text: str) -> str:
     # Retornando os dados do CNPJ informado
 
     #Comando que vai acionar a busca por cnpj: /cnpj 19112659000168
