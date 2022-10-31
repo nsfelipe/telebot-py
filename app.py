@@ -6,6 +6,9 @@ Source: https://github.com/python-telegram-bot/python-telegram-bot/blob/master/e
 
 import os
 import logging
+import requests
+import pandas as pd
+import json
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 
@@ -28,13 +31,46 @@ def help(update, context):
     # Responde quando o comando /help é enviado
     update.message.reply_text('Help!')
 
-def cnpj(update, context):
+def handle_response(text: str, update) -> str:
     # Retornando os dados do CNPJ informado
 
-    cnpj =  " ".join(context.args)
-    #url = 'https://publica.cnpj.ws/cnpj/27865757000102'
+    #Comando que vai acionar a busca por cnpj: /cnpj 19112659000168
+    if '/cnpj' in text and len(text) == 20:
+        # Filtra mensagem e busca pelo cnpj informado na API
+        msg = text.split()
+        cnpj = msg[1]
+        url = f"https://publica.cnpj.ws/cnpj/{cnpj}"
+        resp = requests.get(url)
 
-    update.message.reply_text('cnpj')
+        dados = json.loads(resp.content)
+
+        # Segmenta dicionario em listas menores para acessar os elementos
+        estabelecimento = dados['estabelecimento']
+        atividade_principal = estabelecimento['atividade_principal']
+        estado = estabelecimento['estado']
+        cidade = estabelecimento['cidade']
+
+        # Lista com dados da empresa ja filtrados
+        empresa = {
+            'cnpj': estabelecimento['cnpj'],
+            'razao_social': dados['razao_social'],
+            'nome_fantasia': estabelecimento['nome_fantasia'],
+            'situacao_cadastral': estabelecimento['situacao_cadastral'],
+            'tipo_logradouro': estabelecimento['tipo_logradouro'],
+            'logradouro': estabelecimento['logradouro'],
+            'numero': estabelecimento['numero'],
+            'complemento': estabelecimento['complemento'],
+            'bairro': estabelecimento['bairro'],
+            'cep': estabelecimento['cep'],
+            'cidade': cidade['nome'],
+            'estado': estado['nome'],
+            'telefone1': estabelecimento['ddd1'] + estabelecimento['telefone1'],
+            #'telefone2': estabelecimento['ddd2'] + estabelecimento['telefone2'],
+            'email': estabelecimento['email'],
+            'atividade_principal': atividade_principal['descricao'],
+            'atualizado_em': estabelecimento['atualizado_em']}
+
+        update.message.reply_text(empresa['cnpj'])
 
 
 def echo(update, context):
