@@ -6,6 +6,7 @@ Source: https://github.com/python-telegram-bot/python-telegram-bot/blob/master/e
 
 import os
 import logging
+from turtle import update
 import requests
 import json
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
@@ -69,8 +70,14 @@ def handle_response(text: str, update) -> str:
             'atividade_principal': atividade_principal['descricao'],
             'atualizado_em': estabelecimento['atualizado_em']}
 
-        update.message.reply_text(empresa['cnpj'])
+        return f"Razão Social: {empresa['razao_social']}\nStatus {empresa['situacao_cadastral']}"
+        
 
+def handle_message(update, context):
+    text = str(update.message.text).lower()
+    response = handle_response(text)
+
+    update.message.reply_text(response)
 
 def echo(update, context):
     # Repete a mensagem enviada pelo usuario
@@ -93,9 +100,10 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("hello", hello))
     dp.add_handler(CommandHandler("help", help))
-    dp.add_handler(CommandHandler('cnpj', cnpj))
+    #dp.add_handler(CommandHandler('cnpj', cnpj))
 
     # on noncommand i.e message - echo the message on Telegram
+    dp.add_handler(MessageHandler(Filters.text, handle_message))
     dp.add_handler(MessageHandler(Filters.text, echo))
 
     # log all errors
