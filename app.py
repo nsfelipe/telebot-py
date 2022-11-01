@@ -17,18 +17,22 @@ TOKEN = os.environ['TOKEN']
 # Defina alguns manipuladores de comandos. Estes geralmente levam a atualização de dois argumentos e
 # contexto. Os manipuladores de erro também recebem o objeto TelegramError gerado com erro.
 
+
 def hello(update, context):
     # Responde quando o comando /hello é enviado
-    update.message.reply_text('Hey!\nNosso servidor está ligado, eu estou vivo 🫡')
+    update.message.reply_text(
+        'Hey!\nNosso servidor está ligado, eu estou vivo 🫡')
+
 
 def help(update, context):
     # Responde quando o comando /help é enviado
     update.message.reply_text('Help!')
 
+
 def handle_response(text: str) -> str:
     # Retornando os dados do CNPJ informado
 
-    #Comando que vai acionar a busca por cnpj: /cnpj 19112659000168
+    # Comando que vai acionar a busca por cnpj: /cnpj 19112659000168
     if '/cnpj' in text and len(text) == 20:
         # Filtra mensagem e busca pelo cnpj informado na API
         msg = text.split()
@@ -59,21 +63,15 @@ def handle_response(text: str) -> str:
             'cidade': cidade['nome'],
             'estado': estado['nome'],
             'telefone1': estabelecimento['ddd1'] + estabelecimento['telefone1'],
-            #'telefone2': estabelecimento['ddd2'] + estabelecimento['telefone2'],
+            # 'telefone2': estabelecimento['ddd2'] + estabelecimento['telefone2'],
             'email': estabelecimento['email'],
             'atividade_principal': atividade_principal['descricao'],
             'atualizado_em': estabelecimento['atualizado_em']}
 
-        return f"""---- Consulta inteligente ----
-        Razão Social: {empresa['razao_social']}\n
-        Nome Fantasia: {empresa['nome_fantasia']}\n
-        Status: {empresa['situacao_cadastral']}\n
-        CNPJ: {empresa['cnpj']}\n
-        E-mail: {empresa['email']}\n
-        Atividade principal: {empresa['atividade_principal']}\n
-        Telefone: {empresa['telefone1']}\n\n
-        Dados atualizados em: {empresa['atualizado_em']}"""
-        
+        resposta = f"""---- Consulta inteligente ----\n\nRazão Social: {empresa['razao_social']}\nNome Fantasia: {empresa['nome_fantasia']}\nStatus: {empresa['situacao_cadastral']}\nCNPJ: {empresa['cnpj']}\nE-mail: {empresa['email']}\nAtividade principal: {empresa['atividade_principal']}\nTelefone: {empresa['telefone1']}\n\nDados atualizados em: {empresa['atualizado_em']}"""
+
+        return resposta
+
 
 def handle_message(update, context):
     text = str(update.message.text).lower()
@@ -81,13 +79,16 @@ def handle_message(update, context):
 
     update.message.reply_text(response)
 
+
 def echo(update, context):
     # Repete a mensagem enviada pelo usuario
     update.message.reply_text(update.message.text)
 
+
 def error(update, context):
-    #Erros de log causados ​​por atualizações.
+    # Erros de log causados ​​por atualizações.
     logger.warning('Update "%s" caused error "%s"', update, context.error)
+
 
 def main():
     """Start the bot."""
@@ -121,6 +122,7 @@ def main():
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
     updater.idle()
+
 
 if __name__ == '__main__':
     main()
