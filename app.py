@@ -68,7 +68,7 @@ def handle_response(text: str) -> str:
             'atividade_principal': atividade_principal['descricao'],
             'atualizado_em': estabelecimento['atualizado_em']}
 
-        resposta = f"""---- Consulta inteligente ----\n\nRazão Social: {empresa['razao_social']}\nNome Fantasia: {empresa['nome_fantasia']}\nStatus: {empresa['situacao_cadastral']}\nCNPJ: {empresa['cnpj']}\nE-mail: {empresa['email']}\nAtividade principal: {empresa['atividade_principal']}\nTelefone: {empresa['telefone1']}\n\nDados atualizados em: {empresa['atualizado_em']}"""
+        resposta = f"""---- **Consulta inteligente** ----\n\n**- Razão Social:** {empresa['razao_social']}\n**- Nome Fantasia:** {empresa['nome_fantasia']}\n**- Status:** {empresa['situacao_cadastral']}\n**- CNPJ:** {empresa['cnpj']}\n**- E-mail:** {empresa['email']}\n**- Atividade principal:** {empresa['atividade_principal']}\n**- Telefone:** {empresa['telefone1']}\n\n**- Dados atualizados em:** {empresa['atualizado_em']}"""
 
         return resposta
 
