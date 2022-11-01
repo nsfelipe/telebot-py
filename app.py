@@ -20,13 +20,13 @@ TOKEN = os.environ['TOKEN']
 def hello(update, context):
     # Responde quando o comando /hello é enviado
     update.message.reply_text(
-        '----- ✅ SERVIDOR ONLINE ✅ -----\n\n\nVeja a lista dos comandos disponiveis com o comando /info\n\n\nby: @nsfelipe™️')
+        '----- ✅ SERVIDOR ONLINE ✅ -----\n\n\nVeja a lista dos comandos disponiveis com o comando /info\n\n\nchatbot by: @nsfelipe™️')
 
 
 def info(update, context):
     # Responde quando o comando /help é enviado
     update.message.reply_text(
-        'Digite o comando: /cnpj <cnpj apenas numeros> e o sistema busca as informações no banco de dados')
+        'Digite o comando: /cnpj <cnpj apenas numeros> e o sistema busca as informações no banco de dados\n\n\nchatbot by: @nsfelipe™️')
 
 
 def handle_response(text: str) -> str:
@@ -74,18 +74,19 @@ def handle_response(text: str) -> str:
                     'atividade_principal': atividade_principal['descricao'],
                     'atualizado_em': estabelecimento['atualizado_em']}
 
-                resposta = f"""----- ✅ Consulta inteligente ✅ -----\n\n\nRazão Social: {empresa['razao_social']}\n\nNome Fantasia: {empresa['nome_fantasia']}\n\nStatus: {empresa['situacao_cadastral']}\n\nCNPJ: {empresa['cnpj']}\n\nE-mail: {empresa['email']}\n\nAtividade principal: {empresa['atividade_principal']}\n\nTelefone: {empresa['telefone1']}\n\n\nDados atualizados em: {empresa['atualizado_em']}"""
+                resposta = f"""----- ✅ Consulta inteligente ✅ -----\n\n\nRazão Social: {empresa['razao_social']}\n\nNome Fantasia: {empresa['nome_fantasia']}\n\nStatus: {empresa['situacao_cadastral']}\n\nCNPJ: {empresa['cnpj']}\n\nE-mail: {empresa['email']}\n\nAtividade principal: {empresa['atividade_principal']}\n\nTelefone: {empresa['telefone1']}\n\n\nDados atualizados em: {empresa['atualizado_em']}\n\nchatbot by: @nsfelipe™️"""
                 return resposta
             
             except TypeError:
-                resposta = '----- ⚠️ ATENÇÃO ⚠️ -----\n\n\nHouve um erro ao processar sua solcitação 🤔\n\nNão vou conseguir buscar informações desse CNPJ'
+                resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nHouve um erro ao processar sua solcitação 🤔\n\nNão vou conseguir buscar informações desse CNPJ\n\n\nchatbot by: @nsfelipe™️'
 
             return resposta
 
         else:
-            resposta = '----- ⚠️ ATENÇÃO ⚠️ -----\n\n\nO cnpj informado não está no padrão solicitado.\n\nDigite /info para maiores instruções!'
+            resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nO cnpj informado não está no padrão solicitado.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
             return resposta
-
+    else:
+        resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nO comando informado não está no padrão solicitado.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
 
 def handle_message(update, context):
     text = str(update.message.text).lower()
