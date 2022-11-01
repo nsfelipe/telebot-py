@@ -22,9 +22,9 @@ def hello(update, context):
         'Hey!\nNosso servidor está ligado, eu estou vivo 🫡')
 
 
-def help(update, context):
+def info(update, context):
     # Responde quando o comando /help é enviado
-    update.message.reply_text('Help!')
+    update.message.reply_text('Digite o comando /cnpj <cnpj apenas numeros> e o sistema busca as informações referente a ele!')
 
 
 def handle_response(text: str) -> str:
@@ -47,26 +47,30 @@ def handle_response(text: str) -> str:
         cidade = estabelecimento['cidade']
 
         # Dicionário com dados da empresa ja filtrados
-        empresa = {
-            'cnpj': estabelecimento['cnpj'],
-            'razao_social': dados['razao_social'],
-            'nome_fantasia': estabelecimento['nome_fantasia'],
-            'situacao_cadastral': estabelecimento['situacao_cadastral'],
-            'tipo_logradouro': estabelecimento['tipo_logradouro'],
-            'logradouro': estabelecimento['logradouro'],
-            'numero': estabelecimento['numero'],
-            'complemento': estabelecimento['complemento'],
-            'bairro': estabelecimento['bairro'],
-            'cep': estabelecimento['cep'],
-            'cidade': cidade['nome'],
-            'estado': estado['nome'],
-            'telefone1': estabelecimento['ddd1'] + estabelecimento['telefone1'],
-            # 'telefone2': estabelecimento['ddd2'] + estabelecimento['telefone2'],
-            'email': estabelecimento['email'],
-            'atividade_principal': atividade_principal['descricao'],
-            'atualizado_em': estabelecimento['atualizado_em']}
+        try:
+            empresa = {
+                'cnpj': estabelecimento['cnpj'],
+                'razao_social': dados['razao_social'],
+                'nome_fantasia': estabelecimento['nome_fantasia'],
+                'situacao_cadastral': estabelecimento['situacao_cadastral'],
+                'tipo_logradouro': estabelecimento['tipo_logradouro'],
+                'logradouro': estabelecimento['logradouro'],
+                'numero': estabelecimento['numero'],
+                'complemento': estabelecimento['complemento'],
+                'bairro': estabelecimento['bairro'],
+                'cep': estabelecimento['cep'],
+                'cidade': cidade['nome'],
+                'estado': estado['nome'],
+                'telefone1': estabelecimento['ddd1'] + estabelecimento['telefone1'],
+                # 'telefone2': estabelecimento['ddd2'] + estabelecimento['telefone2'],
+                'email': estabelecimento['email'],
+                'atividade_principal': atividade_principal['descricao'],
+                'atualizado_em': estabelecimento['atualizado_em']}
 
-        resposta = f"""---- Consulta inteligente ----\n\nRazão Social: {empresa['razao_social']}\nNome Fantasia: {empresa['nome_fantasia']}\nStatus: {empresa['situacao_cadastral']}\nCNPJ: {empresa['cnpj']}\nE-mail: {empresa['email']}\nAtividade principal: {empresa['atividade_principal']}\nTelefone: {empresa['telefone1']}\n\nDados atualizados em: {empresa['atualizado_em']}"""
+            resposta = f"""---- Consulta inteligente ----\n\nRazão Social: {empresa['razao_social']}\nNome Fantasia: {empresa['nome_fantasia']}\nStatus: {empresa['situacao_cadastral']}\nCNPJ: {empresa['cnpj']}\nE-mail: {empresa['email']}\nAtividade principal: {empresa['atividade_principal']}\nTelefone: {empresa['telefone1']}\n\nDados atualizados em: {empresa['atualizado_em']}"""
+        
+        except TypeError:
+            resposta = 'Ops! Tive um problema ao processar sua solcitação. Não vou conseguir buscar informações desse CNPJ :('
 
         return resposta
 
@@ -100,7 +104,7 @@ def main():
 
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("hello", hello))
-    dp.add_handler(CommandHandler("help", help))
+    dp.add_handler(CommandHandler("info", info))
     #dp.add_handler(CommandHandler('cnpj', cnpj))
 
     # on noncommand i.e message - echo the message on Telegram
