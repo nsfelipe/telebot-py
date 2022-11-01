@@ -16,63 +16,75 @@ TOKEN = os.environ['TOKEN']
 # Defina alguns manipuladores de comandos. Estes geralmente levam a atualização de dois argumentos e
 # contexto. Os manipuladores de erro também recebem o objeto TelegramError gerado com erro.
 
+
 def hello(update, context):
     # Responde quando o comando /hello é enviado
     update.message.reply_text(
-        'Hey!\nNosso servidor está ligado, eu estou vivo 🫡')
+        '----- ✅ SERVIDOR ONLINE ✅ -----\n\n\nVeja a lista dos comandos disponiveis com o comando \info')
 
 
 def info(update, context):
     # Responde quando o comando /help é enviado
-    update.message.reply_text('Digite o comando /cnpj <cnpj apenas numeros> e o sistema busca as informações referente a ele!')
+    update.message.reply_text(
+        'Digite o comando: /cnpj <cnpj apenas numeros> e o sistema busca as informações no banco de dados')
 
 
 def handle_response(text: str) -> str:
     # Retornando os dados do CNPJ informado
 
     # Comando que vai acionar a busca por cnpj: /cnpj 19112659000168
-    if '/cnpj' in text and len(text) == 20:
+    if '/cnpj' in text:
+
         # Filtra mensagem e busca pelo cnpj informado na API
         msg = text.split()
         cnpj = msg[1]
-        url = f"https://publica.cnpj.ws/cnpj/{cnpj}"
-        resp = requests.get(url)
 
-        dados = json.loads(resp.content)
+        # Filtra a quantidade de caracteres do cnpj
+        if len(cnpj) == 14:
 
-        # Segmenta dicionário em listas menores para acessar os elementos
-        estabelecimento = dados['estabelecimento']
-        atividade_principal = estabelecimento['atividade_principal']
-        estado = estabelecimento['estado']
-        cidade = estabelecimento['cidade']
+            url = f"https://publica.cnpj.ws/cnpj/{cnpj}"
+            resp = requests.get(url)
 
-        # Dicionário com dados da empresa ja filtrados
-        try:
-            empresa = {
-                'cnpj': estabelecimento['cnpj'],
-                'razao_social': dados['razao_social'],
-                'nome_fantasia': estabelecimento['nome_fantasia'],
-                'situacao_cadastral': estabelecimento['situacao_cadastral'],
-                'tipo_logradouro': estabelecimento['tipo_logradouro'],
-                'logradouro': estabelecimento['logradouro'],
-                'numero': estabelecimento['numero'],
-                'complemento': estabelecimento['complemento'],
-                'bairro': estabelecimento['bairro'],
-                'cep': estabelecimento['cep'],
-                'cidade': cidade['nome'],
-                'estado': estado['nome'],
-                'telefone1': estabelecimento['ddd1'] + estabelecimento['telefone1'],
-                # 'telefone2': estabelecimento['ddd2'] + estabelecimento['telefone2'],
-                'email': estabelecimento['email'],
-                'atividade_principal': atividade_principal['descricao'],
-                'atualizado_em': estabelecimento['atualizado_em']}
+            dados = json.loads(resp.content)
 
-            resposta = f"""---- Consulta inteligente ----\n\nRazão Social: {empresa['razao_social']}\nNome Fantasia: {empresa['nome_fantasia']}\nStatus: {empresa['situacao_cadastral']}\nCNPJ: {empresa['cnpj']}\nE-mail: {empresa['email']}\nAtividade principal: {empresa['atividade_principal']}\nTelefone: {empresa['telefone1']}\n\nDados atualizados em: {empresa['atualizado_em']}"""
-        
-        except TypeError:
-            resposta = 'Ops! Tive um problema ao processar sua solcitação. Não vou conseguir buscar informações desse CNPJ :('
+            # Segmenta dicionário em listas menores para acessar os elementos
+            estabelecimento = dados['estabelecimento']
+            atividade_principal = estabelecimento['atividade_principal']
+            estado = estabelecimento['estado']
+            cidade = estabelecimento['cidade']
 
-        return resposta
+            # Dicionário com dados da empresa ja filtrados
+            try:
+                empresa = {
+                    'cnpj': estabelecimento['cnpj'],
+                    'razao_social': dados['razao_social'],
+                    'nome_fantasia': estabelecimento['nome_fantasia'],
+                    'situacao_cadastral': estabelecimento['situacao_cadastral'],
+                    'tipo_logradouro': estabelecimento['tipo_logradouro'],
+                    'logradouro': estabelecimento['logradouro'],
+                    'numero': estabelecimento['numero'],
+                    'complemento': estabelecimento['complemento'],
+                    'bairro': estabelecimento['bairro'],
+                    'cep': estabelecimento['cep'],
+                    'cidade': cidade['nome'],
+                    'estado': estado['nome'],
+                    'telefone1': estabelecimento['ddd1'] + estabelecimento['telefone1'],
+                    # 'telefone2': estabelecimento['ddd2'] + estabelecimento['telefone2'],
+                    'email': estabelecimento['email'],
+                    'atividade_principal': atividade_principal['descricao'],
+                    'atualizado_em': estabelecimento['atualizado_em']}
+
+                resposta = f"""----- ✅ Consulta inteligente ✅ -----\n\n\nRazão Social: {empresa['razao_social']}\n\nNome Fantasia: {empresa['nome_fantasia']}\n\nStatus: {empresa['situacao_cadastral']}\n\nCNPJ: {empresa['cnpj']}\n\nE-mail: {empresa['email']}\n\nAtividade principal: {empresa['atividade_principal']}\n\nTelefone: {empresa['telefone1']}\n\n\nDados atualizados em: {empresa['atualizado_em']}"""
+                return resposta
+            
+            except TypeError:
+                resposta = '----- ⚠️ ATENÇÃO ⚠️ -----\n\n\nHouve um erro ao processar sua solcitação 🤔\n\nNão vou conseguir buscar informações desse CNPJ'
+
+            return resposta
+
+        else:
+            resposta = '----- ⚠️ ATENÇÃO ⚠️ -----\n\n\nO cnpj informado não está no padrão solicitado.\n\nDigite /info para maiores instruções!'
+            return resposta
 
 
 def handle_message(update, context):
