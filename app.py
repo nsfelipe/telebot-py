@@ -26,7 +26,7 @@ def hello(update, context):
 def info(update, context):
     # Responde quando o comando /help é enviado
     update.message.reply_text(
-        'Digite o comando: /cnpj <cnpj apenas numeros> e o sistema busca as informações no banco de dados\n\n\nchatbot by: @nsfelipe™️')
+        '----- COMANDOS DISPONÍVEIS -----\n\n\nDigite o comando: /cnpj <cnpj apenas numeros> e o sistema busca as informações no banco de dados\n\n\nchatbot by: @nsfelipe™️')
 
 
 def handle_response(text: str) -> str:
