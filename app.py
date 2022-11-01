@@ -2,6 +2,7 @@ import os
 import logging
 import requests
 import json
+import datetime as dt
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 
@@ -64,15 +65,14 @@ def handle_response(text: str) -> str:
             'atualizado_em': estabelecimento['atualizado_em']}
 
         return f"""---- Consulta inteligente ----
-                    Razão Social: {empresa['razao_social']}\n
-                    Nome Fantasia: {empresa['nome_fantasia']}\n
-                    Status: {empresa['situacao_cadastral']}\n
-                    CNPJ: {empresa['cnpj']}\n
-                    E-mail: {empresa['email']}\n
-                    Atividade principal: {empresa['atividade_principal']}\n
-                    Telefone: {empresa['telefone1']}\n\n
-                    Dados atualizados em: {empresa['atualizado_em']}
-                    """
+        Razão Social: {empresa['razao_social']}\n
+        Nome Fantasia: {empresa['nome_fantasia']}\n
+        Status: {empresa['situacao_cadastral']}\n
+        CNPJ: {empresa['cnpj']}\n
+        E-mail: {empresa['email']}\n
+        Atividade principal: {empresa['atividade_principal']}\n
+        Telefone: {empresa['telefone1']}\n\n
+        Dados atualizados em: {empresa['atualizado_em'].dt.strptime('%Y-%m-%d')}"""
         
 
 def handle_message(update, context):
