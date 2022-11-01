@@ -2,7 +2,6 @@ import os
 import logging
 import requests
 import json
-import datetime as dt
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 
@@ -16,7 +15,6 @@ TOKEN = os.environ['TOKEN']
 
 # Defina alguns manipuladores de comandos. Estes geralmente levam a atualização de dois argumentos e
 # contexto. Os manipuladores de erro também recebem o objeto TelegramError gerado com erro.
-
 
 def hello(update, context):
     # Responde quando o comando /hello é enviado
