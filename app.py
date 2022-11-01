@@ -20,7 +20,7 @@ TOKEN = os.environ['TOKEN']
 def hello(update, context):
     # Responde quando o comando /hello é enviado
     update.message.reply_text(
-        '----- ✅ SERVIDOR ONLINE ✅ -----\n\n\nVeja a lista dos comandos disponiveis com o comando \info')
+        '----- ✅ SERVIDOR ONLINE ✅ -----\n\n\nVeja a lista dos comandos disponiveis com o comando /info\n\n\nby: @nsfelipe™️')
 
 
 def info(update, context):
