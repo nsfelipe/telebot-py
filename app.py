@@ -72,7 +72,7 @@ def handle_response(text: str) -> str:
         E-mail: {empresa['email']}\n
         Atividade principal: {empresa['atividade_principal']}\n
         Telefone: {empresa['telefone1']}\n\n
-        Dados atualizados em: {empresa['atualizado_em'].dt.strptime('%Y-%m-%d')}"""
+        Dados atualizados em: {empresa['atualizado_em']}"""
         
 
 def handle_message(update, context):
