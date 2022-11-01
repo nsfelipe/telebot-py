@@ -1,9 +1,3 @@
-
-"""
-Simple Bot to reply to Telegram messages taken from the python-telegram-bot examples.
-Source: https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/echobot2.py
-"""
-
 import os
 import logging
 import requests
@@ -43,13 +37,13 @@ def handle_response(text: str) -> str:
 
         dados = json.loads(resp.content)
 
-        # Segmenta dicionario em listas menores para acessar os elementos
+        # Segmenta dicionário em listas menores para acessar os elementos
         estabelecimento = dados['estabelecimento']
         atividade_principal = estabelecimento['atividade_principal']
         estado = estabelecimento['estado']
         cidade = estabelecimento['cidade']
 
-        # Lista com dados da empresa ja filtrados
+        # Dicionário com dados da empresa ja filtrados
         empresa = {
             'cnpj': estabelecimento['cnpj'],
             'razao_social': dados['razao_social'],
@@ -69,7 +63,16 @@ def handle_response(text: str) -> str:
             'atividade_principal': atividade_principal['descricao'],
             'atualizado_em': estabelecimento['atualizado_em']}
 
-        return f"Razão Social: {empresa['razao_social']}\nStatus {empresa['situacao_cadastral']}"
+        return f"""---- Consulta inteligente ----
+                    Razão Social: {empresa['razao_social']}\n
+                    Nome Fantasia: {empresa['nome_fantasia']}\n
+                    Status: {empresa['situacao_cadastral']}\n
+                    CNPJ: {empresa['cnpj']}\n
+                    E-mail: {empresa['email']}\n
+                    Atividade principal: {empresa['atividade_principal']}\n
+                    Telefone: {empresa['telefone1']}\n\n
+                    Dados atualizados em: {empresa['atualizado_em']}
+                    """
         
 
 def handle_message(update, context):
