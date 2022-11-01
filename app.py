@@ -26,7 +26,7 @@ def hello(update, context):
 def info(update, context):
     # Responde quando o comando /help é enviado
     update.message.reply_text(
-        '----- COMANDOS DISPONÍVEIS -----\n\n\nDigite o comando:\n\n/cnpj 01123123000101\n\n E o sistema busca as informações no banco de dados 🚀\n\n\nchatbot by: @nsfelipe™️')
+        '----- COMANDOS DISPONÍVEIS -----\n\n\n- Busca de dados de empresas:\n\n/cnpj 01123123000101\n\n\nchatbot by: @nsfelipe™️')
 
 
 def handle_response(text: str) -> str:
@@ -74,7 +74,7 @@ def handle_response(text: str) -> str:
                     'atividade_principal': atividade_principal['descricao'],
                     'atualizado_em': estabelecimento['atualizado_em']}
 
-                resposta = f"""----- ✅ Consulta inteligente ✅ -----\n\n\nRazão Social: {empresa['razao_social']}\n\nNome Fantasia: {empresa['nome_fantasia']}\n\nStatus: {empresa['situacao_cadastral']}\n\nCNPJ: {empresa['cnpj']}\n\nE-mail: {empresa['email']}\n\nAtividade principal: {empresa['atividade_principal']}\n\nTelefone: {empresa['telefone1']}\n\n\nDados atualizados em: {empresa['atualizado_em']}\n\nchatbot by: @nsfelipe 🚀™️"""
+                resposta = f"""----- ✅ Consulta inteligente ✅ -----\n\n\n- Razão Social: {empresa['razao_social']}\n\n- Nome Fantasia: {empresa['nome_fantasia']}\n\n- Status: {empresa['situacao_cadastral']}\n\n- CNPJ: {empresa['cnpj']}\n\n- E-mail: {empresa['email']}\n\n- Atividade principal: {empresa['atividade_principal']}\n\n- Telefone: {empresa['telefone1']}\n\n\nDados atualizados em: {empresa['atualizado_em']}\n\nchatbot by: @nsfelipe 🚀™️"""
                 return resposta
             
             except TypeError:
