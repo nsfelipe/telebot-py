@@ -69,7 +69,7 @@ def handle_response(text: str) -> str:
                     'cidade': cidade['nome'],
                     'estado': estado['nome'],
                     'telefone1': estabelecimento['ddd1'] + estabelecimento['telefone1'],
-                    # 'telefone2': estabelecimento['ddd2'] + estabelecimento['telefone2'],
+                    #'telefone2': estabelecimento['ddd2'] + estabelecimento['telefone2'],
                     'email': estabelecimento['email'],
                     'atividade_principal': atividade_principal['descricao'],
                     'atualizado_em': estabelecimento['atualizado_em']}
@@ -82,9 +82,25 @@ def handle_response(text: str) -> str:
 
             return resposta
 
-        else:
-            resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nO cnpj informado não está no padrão solicitado.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
+        if len(text) != 20:
+
+            resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
             return resposta
+    
+    # Busca informações do CEP
+    if '/cep' in text:
+
+        # Filtra mensagem e busca pelo cep informado na API
+        msg = text.split()
+        cep = msg[1] #34004481 
+        
+        if len(cep) == 8:
+            
+            url = f'https://viacep.com.br/ws/{cep}/json/'
+            resp = requests.get(url)
+
+            dados = json.loads(resp.content)
+
     else:
         resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nO comando informado não está no padrão solicitado.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
 
