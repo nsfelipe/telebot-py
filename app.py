@@ -44,6 +44,8 @@ def handle_response(text: str) -> str:
 
         resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
 
+        return resposta.upper()
+
     # Comando que vai acionar a busca por cnpj: /cnpj 19112659000168
     if '/cnpj' in text:
 
@@ -115,10 +117,13 @@ def handle_response(text: str) -> str:
             url = f'https://viacep.com.br/ws/{cep}/json/'
             resp = requests.get(url)
 
-            cep_response = json.loads(resp.content)
+            if resp.status_code == 200:
+                cep_response = json.loads(resp.content)
 
-            resposta = f"""✅----✅ RESULTADO: CEP ✅----✅\n\n\n- CIDADE: {cep_response['localidade']}\n\n- BAIRRO: {cep_response['bairro']}\n\n- ESTADO: {cep_response['uf']}\n\n- LONGRADOURO: {cep_response['logradouro']}\n\n\nchatbot by: @nsfelipe 🚀™️"""
-            return resposta.upper()
+                resposta = f"""✅----✅ RESULTADO: CEP ✅----✅\n\n\n- CIDADE: {cep_response['localidade']}\n\n- BAIRRO: {cep_response['bairro']}\n\n- ESTADO: {cep_response['uf']}\n\n- LONGRADOURO: {cep_response['logradouro']}\n\n\nchatbot by: @nsfelipe 🚀™️"""
+                return resposta.upper()
+            else:
+                return requisicao_invalida()
         else:
             #resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
             return comando_errado()
