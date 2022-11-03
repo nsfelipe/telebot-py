@@ -85,7 +85,7 @@ def handle_response(text: str) -> str:
 
             return resposta.upper()
 
-        if len(texto) != 20:
+        else:
 
             resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
             return resposta.upper()
