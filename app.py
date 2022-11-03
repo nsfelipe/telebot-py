@@ -25,7 +25,7 @@ def hello(update, context):
 
 def info(update, context):
     # Responde quando o comando /help é enviado
-    text = '✅----✅ LISTA COMANDOS ✅----✅\n\n\n- Busca de dados de empresas:\n\n#cnpj 01123123000101\n\n\n- Busca de cep:\n\n/#cep 30044000\n\n\nchatbot by: @nsfelipe™️'
+    text = '✅----✅ LISTA COMANDOS ✅----✅\n\n\n- Busca de dados de empresas:\n\n/cnpj 01123123000101\n\n\n- Busca de cep:\n\n/cep 30044000\n\n\nchatbot by: @nsfelipe™️'
     update.message.reply_text(text.upper())
 
 
@@ -35,7 +35,7 @@ def handle_response(text: str) -> str:
     texto = None
 
     # Comando que vai acionar a busca por cnpj: /cnpj 19112659000168
-    if '#cnpj' in text:
+    if '/cnpj' in text:
 
         # Filtra mensagem e busca pelo cnpj informado na API
 
