@@ -17,7 +17,7 @@ TOKEN = os.environ['TOKEN']
 # contexto. Os manipuladores de erro também recebem o objeto TelegramError gerado com erro.
 
 
-def hello(update, context):
+def start(update, context):
     # Responde quando o comando /hello é enviado
     text = '✅----✅ SERVIDOR ONLINE ✅----✅\n\n\nVEJA OS COMANDOS DISPONIVEL USANDO /info\n\n\nchatbot by: @nsfelipe™️'
     update.message.reply_text(text.upper())
@@ -148,7 +148,7 @@ def main():
     dp = updater.dispatcher
 
     # on different commands - answer in Telegram
-    dp.add_handler(CommandHandler("hello", hello))
+    dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("info", info))
     #dp.add_handler(CommandHandler('cnpj', cnpj))
 
