@@ -26,19 +26,19 @@ def hello(update, context):
 def info(update, context):
     # Responde quando o comando /help é enviado
     update.message.reply_text(
-        '----- COMANDOS DISPONÍVEIS -----\n\n\n- Busca de dados de empresas:\n\n/cnpj 01123123000101\n\n\nchatbot by: @nsfelipe™️')
+        '----- COMANDOS DISPONÍVEIS -----\n\n\n- Busca de dados de empresas:\n\n/cnpj 01123123000101\n\n\n- Busca de cep:\n\n/cep 30044000\n\n\nchatbot by: @nsfelipe™️')
 
 
 def handle_response(text: str) -> str:
     # Retornando os dados do CNPJ informado
-    
+
     texto = None
-   
+
     # Comando que vai acionar a busca por cnpj: /cnpj 19112659000168
     if '/' in text and 'cnpj' in text:
 
         # Filtra mensagem e busca pelo cnpj informado na API
-        
+
         msg = text.split()
         cnpj = msg[1]
 
@@ -72,40 +72,45 @@ def handle_response(text: str) -> str:
                     'cidade': cidade['nome'],
                     'estado': estado['nome'],
                     'telefone1': estabelecimento['ddd1'] + estabelecimento['telefone1'],
-                    #'telefone2': estabelecimento['ddd2'] + estabelecimento['telefone2'],
+                    # 'telefone2': estabelecimento['ddd2'] + estabelecimento['telefone2'],
                     'email': estabelecimento['email'],
                     'atividade_principal': atividade_principal['descricao'],
                     'atualizado_em': estabelecimento['atualizado_em']}
 
                 resposta = f"""----- ✅ Consulta inteligente ✅ -----\n\n\n- Razão Social: {empresa['razao_social']}\n\n- Nome Fantasia: {empresa['nome_fantasia']}\n\n- Status: {empresa['situacao_cadastral']}\n\n- CNPJ: {empresa['cnpj']}\n\n- E-mail: {empresa['email']}\n\n- Atividade principal: {empresa['atividade_principal']}\n\n- Telefone: {empresa['telefone1']}\n\n\nDados atualizados em: {empresa['atualizado_em']}\n\nchatbot by: @nsfelipe 🚀™️"""
-                return resposta
-            
+                return resposta.upper()
+
             except TypeError:
                 resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nHouve um erro ao processar sua solcitação 🤔\n\nNão vou conseguir buscar informações desse CNPJ\n\n\nchatbot by: @nsfelipe™️'
 
-            return resposta
+            return resposta.upper()
 
         if len(texto) != 20:
 
             resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
-            return resposta
+            return resposta.upper()
 
     # Busca informações do CEP
     if '/cep' in text:
 
         # Filtra mensagem e busca pelo cep informado na API
         msg = text.split()
-        cep = msg[1] #34004481 
-        
+        cep = msg[1]  # 34004481
+
         if len(cep) == 8:
-            
+
             url = f'https://viacep.com.br/ws/{cep}/json/'
             resp = requests.get(url)
 
-            dados = json.loads(resp.content)
+            cep_response = json.loads(resp.content)
+
+            resposta = f"""----- ✅ Consulta inteligente ✅ -----\n\n\n- CIDADE: {cep_response['localidade']}\n\n- BAIRRO: {cep_response['bairro']}\n\n- ESTADO: {cep_response['uf']}\n\n- LONGRADOURO: {cep_response['logradouro']}\n\n\nchatbot by: @nsfelipe 🚀™️"""
+            return resposta.upper()
 
     else:
         resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nO comando informado não está no padrão solicitado.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
+        return resposta.upper()
+
 
 def handle_message(update, context):
     text = str(update.message.text).lower()
