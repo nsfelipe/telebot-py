@@ -19,7 +19,7 @@ TOKEN = os.environ['TOKEN']
 
 def hello(update, context):
     # Responde quando o comando /hello é enviado
-    text = '✅----✅ SERVIDOR ONLINE ✅----✅\n\n\nVeja a lista dos comandos disponiveis com o comando /info\n\n\nchatbot by: @nsfelipe™️'
+    text = '✅----✅ SERVIDOR ONLINE ✅----✅\n\n\nVEJA OS COMANDOS DISPONIVEL USANDO /info\n\n\nchatbot by: @nsfelipe™️'
     update.message.reply_text(text.upper())
 
 
