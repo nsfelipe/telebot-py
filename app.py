@@ -32,10 +32,10 @@ def info(update, context):
 def handle_response(text: str) -> str:
     # Retornando os dados do CNPJ informado
     
-    texto = text
+    texto = None
    
     # Comando que vai acionar a busca por cnpj: /cnpj 19112659000168
-    if '/cnpj' in text:
+    if '/' in text and 'cnpj' in text:
 
         # Filtra mensagem e busca pelo cnpj informado na API
         
@@ -89,12 +89,7 @@ def handle_response(text: str) -> str:
 
             resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
             return resposta
-    
-    else:
 
-        resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
-        return resposta
-        ''
     # Busca informações do CEP
     if '/cep' in text:
 
