@@ -19,13 +19,13 @@ TOKEN = os.environ['TOKEN']
 
 def hello(update, context):
     # Responde quando o comando /hello é enviado
-    text = '----- ✅ SERVIDOR ONLINE ✅ -----\n\n\nVeja a lista dos comandos disponiveis com o comando /info\n\n\nchatbot by: @nsfelipe™️'
+    text = '✅----✅ SERVIDOR ONLINE ✅----✅\n\n\nVeja a lista dos comandos disponiveis com o comando /info\n\n\nchatbot by: @nsfelipe™️'
     update.message.reply_text(text.upper())
 
 
 def info(update, context):
     # Responde quando o comando /help é enviado
-    text = '----- COMANDOS DISPONÍVEIS -----\n\n\n- Busca de dados de empresas:\n\n/cnpj 01123123000101\n\n\n- Busca de cep:\n\n/cep 30044000\n\n\nchatbot by: @nsfelipe™️'
+    text = '✅----✅ COMANDOS DISPONÍVEIS ✅----✅\n\n\n- Busca de dados de empresas:\n\n#cnpj 01123123000101\n\n\n- Busca de cep:\n\n/#cep 30044000\n\n\nchatbot by: @nsfelipe™️'
     update.message.reply_text(text.upper())
 
 
@@ -35,7 +35,7 @@ def handle_response(text: str) -> str:
     texto = None
 
     # Comando que vai acionar a busca por cnpj: /cnpj 19112659000168
-    if '/' in text and 'cnpj' in text:
+    if '#cnpj' in text:
 
         # Filtra mensagem e busca pelo cnpj informado na API
 
@@ -77,17 +77,17 @@ def handle_response(text: str) -> str:
                     'atividade_principal': atividade_principal['descricao'],
                     'atualizado_em': estabelecimento['atualizado_em']}
 
-                resposta = f"""----- ✅ Consulta inteligente ✅ -----\n\n\n- Razão Social: {empresa['razao_social']}\n\n- Nome Fantasia: {empresa['nome_fantasia']}\n\n- Status: {empresa['situacao_cadastral']}\n\n- CNPJ: {empresa['cnpj']}\n\n- E-mail: {empresa['email']}\n\n- Atividade principal: {empresa['atividade_principal']}\n\n- Telefone: {empresa['telefone1']}\n\n\nDados atualizados em: {empresa['atualizado_em']}\n\nchatbot by: @nsfelipe 🚀™️"""
+                resposta = f"""✅----✅ Consulta inteligente ✅----✅\n\n\n- Razão Social: {empresa['razao_social']}\n\n- Nome Fantasia: {empresa['nome_fantasia']}\n\n- Status: {empresa['situacao_cadastral']}\n\n- CNPJ: {empresa['cnpj']}\n\n- E-mail: {empresa['email']}\n\n- Atividade principal: {empresa['atividade_principal']}\n\n- Telefone: {empresa['telefone1']}\n\n\nDados atualizados em: {empresa['atualizado_em']}\n\nchatbot by: @nsfelipe 🚀™️"""
                 return resposta.upper()
 
             except TypeError:
-                resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nHouve um erro ao processar sua solcitação 🤔\n\nNão vou conseguir buscar informações desse CNPJ\n\n\nchatbot by: @nsfelipe™️'
+                resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nHouve um erro ao processar sua solcitação 🤔\n\nNão vou conseguir buscar informações desse CNPJ\n\n\nchatbot by: @nsfelipe™️'
 
             return resposta.upper()
 
         if len(texto) != 20:
 
-            resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
+            resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
             return resposta.upper()
 
     # Busca informações do CEP
@@ -104,11 +104,11 @@ def handle_response(text: str) -> str:
 
             cep_response = json.loads(resp.content)
 
-            resposta = f"""----- ✅ Consulta inteligente ✅ -----\n\n\n- CIDADE: {cep_response['localidade']}\n\n- BAIRRO: {cep_response['bairro']}\n\n- ESTADO: {cep_response['uf']}\n\n- LONGRADOURO: {cep_response['logradouro']}\n\n\nchatbot by: @nsfelipe 🚀™️"""
+            resposta = f"""✅----✅ Consulta inteligente ✅----✅\n\n\n- CIDADE: {cep_response['localidade']}\n\n- BAIRRO: {cep_response['bairro']}\n\n- ESTADO: {cep_response['uf']}\n\n- LONGRADOURO: {cep_response['logradouro']}\n\n\nchatbot by: @nsfelipe 🚀™️"""
             return resposta.upper()
 
     else:
-        resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nO comando informado não está no padrão solicitado.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
+        resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão solicitado.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
         return resposta.upper()
 
 
