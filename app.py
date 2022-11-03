@@ -36,6 +36,7 @@ def handle_response(text: str) -> str:
     if '/cnpj' in text:
 
         # Filtra mensagem e busca pelo cnpj informado na API
+        texto = text
         msg = text.split()
         cnpj = msg[1]
 
@@ -82,7 +83,7 @@ def handle_response(text: str) -> str:
 
             return resposta
 
-        if len(text) != 20:
+        if len(texto) != 20:
 
             resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
             return resposta
