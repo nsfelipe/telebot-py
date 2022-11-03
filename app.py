@@ -97,7 +97,6 @@ def handle_response(text: str) -> str:
 
                 except TypeError:
                     resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nHouve um erro ao processar sua solcitação 🤔\n\nNão vou conseguir buscar informações desse CNPJ\n\n\nchatbot by: @nsfelipe™️'
-
                 return resposta.upper()
 
             else:
@@ -123,15 +122,14 @@ def handle_response(text: str) -> str:
 
                 resposta = f"""✅----✅ RESULTADO: CEP ✅----✅\n\n\n- CIDADE: {cep_response['localidade']}\n\n- BAIRRO: {cep_response['bairro']}\n\n- ESTADO: {cep_response['uf']}\n\n- LONGRADOURO: {cep_response['logradouro']}\n\n\nchatbot by: @nsfelipe 🚀™️"""
                 return resposta.upper()
+            
             else:
                 return requisicao_invalida()
         
         else:
-            #resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
             return comando_errado()
 
     else:
-        #resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão solicitado.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
         return comando_errado()
 
 
