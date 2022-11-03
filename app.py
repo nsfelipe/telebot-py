@@ -19,14 +19,14 @@ TOKEN = os.environ['TOKEN']
 
 def hello(update, context):
     # Responde quando o comando /hello é enviado
-    update.message.reply_text(
-        '----- ✅ SERVIDOR ONLINE ✅ -----\n\n\nVeja a lista dos comandos disponiveis com o comando /info\n\n\nchatbot by: @nsfelipe™️')
+    text = '----- ✅ SERVIDOR ONLINE ✅ -----\n\n\nVeja a lista dos comandos disponiveis com o comando /info\n\n\nchatbot by: @nsfelipe™️'
+    update.message.reply_text(text.upper())
 
 
 def info(update, context):
     # Responde quando o comando /help é enviado
-    update.message.reply_text(
-        '----- COMANDOS DISPONÍVEIS -----\n\n\n- Busca de dados de empresas:\n\n/cnpj 01123123000101\n\n\n- Busca de cep:\n\n/cep 30044000\n\n\nchatbot by: @nsfelipe™️')
+    text = '----- COMANDOS DISPONÍVEIS -----\n\n\n- Busca de dados de empresas:\n\n/cnpj 01123123000101\n\n\n- Busca de cep:\n\n/cep 30044000\n\n\nchatbot by: @nsfelipe™️'
+    update.message.reply_text(text.upper())
 
 
 def handle_response(text: str) -> str:
