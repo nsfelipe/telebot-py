@@ -34,6 +34,12 @@ def handle_response(text: str) -> str:
 
     texto = None
 
+    def comando_errado():
+
+        resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
+
+        return resposta
+
     # Comando que vai acionar a busca por cnpj: /cnpj 19112659000168
     if '/cnpj' in text:
 
@@ -87,8 +93,7 @@ def handle_response(text: str) -> str:
 
         else:
 
-            resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
-            return resposta.upper()
+            return comando_errado()
 
     # Busca informações do CEP
     if '/cep' in text:
@@ -106,10 +111,13 @@ def handle_response(text: str) -> str:
 
             resposta = f"""✅----✅ RESULTADO: CEP ✅----✅\n\n\n- CIDADE: {cep_response['localidade']}\n\n- BAIRRO: {cep_response['bairro']}\n\n- ESTADO: {cep_response['uf']}\n\n- LONGRADOURO: {cep_response['logradouro']}\n\n\nchatbot by: @nsfelipe 🚀™️"""
             return resposta.upper()
+        else:
+            #resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
+            return comando_errado()
 
     else:
-        resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão solicitado.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
-        return resposta.upper()
+        #resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão solicitado.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
+        return comando_errado()
 
 
 def handle_message(update, context):
