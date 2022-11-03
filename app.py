@@ -39,6 +39,10 @@ def handle_response(text: str) -> str:
         resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
 
         return resposta.upper()
+    
+    def requisicao_invalida():
+
+        resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
 
     # Comando que vai acionar a busca por cnpj: /cnpj 19112659000168
     if '/cnpj' in text:
@@ -53,44 +57,48 @@ def handle_response(text: str) -> str:
 
             url = f"https://publica.cnpj.ws/cnpj/{cnpj}"
             resp = requests.get(url)
+            
+            if resp.status_code == 200:
+                dados = json.loads(resp.content)
 
-            dados = json.loads(resp.content)
+                # Segmenta dicionário em listas menores para acessar os elementos
+                estabelecimento = dados['estabelecimento']
+                atividade_principal = estabelecimento['atividade_principal']
+                estado = estabelecimento['estado']
+                cidade = estabelecimento['cidade']
 
-            # Segmenta dicionário em listas menores para acessar os elementos
-            estabelecimento = dados['estabelecimento']
-            atividade_principal = estabelecimento['atividade_principal']
-            estado = estabelecimento['estado']
-            cidade = estabelecimento['cidade']
+                # Dicionário com dados da empresa ja filtrados
+                try:
+                    empresa = {
+                        'cnpj': estabelecimento['cnpj'],
+                        'razao_social': dados['razao_social'],
+                        'nome_fantasia': estabelecimento['nome_fantasia'],
+                        'situacao_cadastral': estabelecimento['situacao_cadastral'],
+                        'tipo_logradouro': estabelecimento['tipo_logradouro'],
+                        'logradouro': estabelecimento['logradouro'],
+                        'numero': estabelecimento['numero'],
+                        'complemento': estabelecimento['complemento'],
+                        'bairro': estabelecimento['bairro'],
+                        'cep': estabelecimento['cep'],
+                        'cidade': cidade['nome'],
+                        'estado': estado['nome'],
+                        'ddd1': estabelecimento['ddd1'],
+                        'telefone1': estabelecimento['telefone1'],
+                        'ddd2': estabelecimento['ddd2'],
+                        'telefone2': estabelecimento['telefone2'],
+                        'email': estabelecimento['email'],
+                        'atividade_principal': atividade_principal['descricao'],
+                        'atualizado_em': estabelecimento['atualizado_em']}
 
-            # Dicionário com dados da empresa ja filtrados
-            try:
-                empresa = {
-                    'cnpj': estabelecimento['cnpj'],
-                    'razao_social': dados['razao_social'],
-                    'nome_fantasia': estabelecimento['nome_fantasia'],
-                    'situacao_cadastral': estabelecimento['situacao_cadastral'],
-                    'tipo_logradouro': estabelecimento['tipo_logradouro'],
-                    'logradouro': estabelecimento['logradouro'],
-                    'numero': estabelecimento['numero'],
-                    'complemento': estabelecimento['complemento'],
-                    'bairro': estabelecimento['bairro'],
-                    'cep': estabelecimento['cep'],
-                    'cidade': cidade['nome'],
-                    'estado': estado['nome'],
-                    'telefone1': estabelecimento['ddd1'] + estabelecimento['telefone1'],
-                    # 'telefone2': estabelecimento['ddd2'] + estabelecimento['telefone2'],
-                    'email': estabelecimento['email'],
-                    'atividade_principal': atividade_principal['descricao'],
-                    'atualizado_em': estabelecimento['atualizado_em']}
+                    resposta = f"""✅----✅ RESULTADO: CNPJ ✅----✅\n\n\n- Razão Social: {empresa['razao_social']}\n\n- Nome Fantasia: {empresa['nome_fantasia']}\n\n- Status: {empresa['situacao_cadastral']}\n\n- CNPJ: {empresa['cnpj']}\n\n- E-mail: {empresa['email']}\n\n- Atividade principal: {empresa['atividade_principal']}\n\n- Telefone: {empresa['dd1'] + empresa['telefone1']}\n\n\nDados atualizados em: {empresa['atualizado_em']}\n\nchatbot by: @nsfelipe 🚀™️"""
+                    return resposta.upper()
 
-                resposta = f"""✅----✅ RESULTADO: CNPJ ✅----✅\n\n\n- Razão Social: {empresa['razao_social']}\n\n- Nome Fantasia: {empresa['nome_fantasia']}\n\n- Status: {empresa['situacao_cadastral']}\n\n- CNPJ: {empresa['cnpj']}\n\n- E-mail: {empresa['email']}\n\n- Atividade principal: {empresa['atividade_principal']}\n\n- Telefone: {empresa['telefone1']}\n\n\nDados atualizados em: {empresa['atualizado_em']}\n\nchatbot by: @nsfelipe 🚀™️"""
+                except TypeError:
+                    resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nHouve um erro ao processar sua solcitação 🤔\n\nNão vou conseguir buscar informações desse CNPJ\n\n\nchatbot by: @nsfelipe™️'
+
                 return resposta.upper()
-
-            except TypeError:
-                resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nHouve um erro ao processar sua solcitação 🤔\n\nNão vou conseguir buscar informações desse CNPJ\n\n\nchatbot by: @nsfelipe™️'
-
-            return resposta.upper()
-
+            else:
+                return requisicao_invalida()
         else:
 
             return comando_errado()
