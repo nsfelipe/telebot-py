@@ -88,6 +88,11 @@ def handle_response(text: str) -> str:
             resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
             return resposta
     
+    else:
+
+        resposta = '------- ⚠️ ATENÇÃO ⚠️ -------\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
+        return resposta
+        
     # Busca informações do CEP
     if '/cep' in text:
 
