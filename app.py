@@ -39,10 +39,10 @@ def handle_response(text: str) -> str:
         resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
 
         return resposta.upper()
-    
+
     def requisicao_invalida():
 
-        resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
+        resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nNão foi possivel realizar a sua consulta pois o cnpj informado não é valido.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
 
         return resposta.upper()
 
@@ -59,7 +59,7 @@ def handle_response(text: str) -> str:
 
             url = f"https://publica.cnpj.ws/cnpj/{cnpj}"
             resp = requests.get(url)
-            
+
             if resp.status_code == 200:
                 dados = json.loads(resp.content)
 
@@ -99,10 +99,11 @@ def handle_response(text: str) -> str:
                     resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nHouve um erro ao processar sua solcitação 🤔\n\nNão vou conseguir buscar informações desse CNPJ\n\n\nchatbot by: @nsfelipe™️'
 
                 return resposta.upper()
+
             else:
                 return requisicao_invalida()
+        
         else:
-
             return comando_errado()
 
     # Busca informações do CEP
@@ -124,6 +125,7 @@ def handle_response(text: str) -> str:
                 return resposta.upper()
             else:
                 return requisicao_invalida()
+        
         else:
             #resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nO comando informado não está no padrão.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
             return comando_errado()
