@@ -97,7 +97,7 @@ def handle_response(text: str) -> str:
 
                 except TypeError:
                     resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nHouve um erro ao processar sua solcitação 🤔\n\nNão vou conseguir buscar informações desse CNPJ\n\n\nchatbot by: @nsfelipe™️'
-                return resposta.upper()
+                    return resposta.upper()
 
             else:
                 return requisicao_invalida()
