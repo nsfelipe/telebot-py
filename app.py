@@ -98,7 +98,7 @@ def handle_response(text: str) -> str:
                     return resposta.upper()
 
             else:
-                return requisicao_invalida(tipo='cnpj')
+                return requisicao_invalida('cnpj')
         
         else:
             return comando_errado()
@@ -127,7 +127,7 @@ def handle_response(text: str) -> str:
                     return resposta.upper()
             
             else:
-                return requisicao_invalida(tipo='cep')
+                return requisicao_invalida('cep')
         
         else:
             return comando_errado()
