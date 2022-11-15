@@ -131,6 +131,11 @@ def handle_response(text: str) -> str:
         
         else:
             return comando_errado()
+    
+    # Responde comando repositório
+    if '/repositorio' in text:
+        resposta = f'✅----✅ CÓDIGO FONTE ✅----✅\n\n\nLINK DO GITHUB: https://github.com/nsfelipe/telebot-py \n\n\nchatbot by: @nsfelipe 🚀'
+        return resposta
 
     else:
         return comando_errado()
