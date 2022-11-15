@@ -95,7 +95,7 @@ def handle_response(text: str) -> str:
                     resposta = f"""✅----✅ RESULTADO: CNPJ ✅----✅\n\n\n- Razão Social: {empresa['razao_social']}\n\n- Nome Fantasia: {empresa['nome_fantasia']}\n\n- Status: {empresa['situacao_cadastral']}\n\n- CNPJ: {empresa['cnpj']}\n\n- E-mail: {empresa['email']}\n\n- Atividade principal: {empresa['atividade_principal']}\n\n- Telefone: {empresa['dd1'] + empresa['telefone1']}\n\n\nDados atualizados em: {empresa['atualizado_em']}\n\nchatbot by: @nsfelipe 🚀™️"""
                     return resposta.upper()
 
-                except TypeError:
+                except:
                     resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nHouve um erro ao processar sua solcitação 🤔\n\nNão vou conseguir buscar informações desse CNPJ\n\n\nchatbot by: @nsfelipe™️'
                     return resposta.upper()
 
