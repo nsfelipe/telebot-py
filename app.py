@@ -92,7 +92,7 @@ def handle_response(text: str) -> str:
                         'atividade_principal': atividade_principal['descricao'],
                         'atualizado_em': estabelecimento['atualizado_em']}
 
-                    resposta = f"""✅----✅ RESULTADO: CNPJ ✅----✅\n\n\n- Razão Social: {empresa['razao_social']}\n\n- Nome Fantasia: {empresa['nome_fantasia']}\n\n- Status: {empresa['situacao_cadastral']}\n\n- CNPJ: {empresa['cnpj']}\n\n- E-mail: {empresa['email']}\n\n- Atividade principal: {empresa['atividade_principal']}\n\n- Telefone: {empresa['dd1'] + empresa['telefone1']}\n\n\nDados atualizados em: {empresa['atualizado_em']}\n\nchatbot by: @nsfelipe 🚀™️"""
+                    resposta = f"""✅----✅ RESULTADO: CNPJ ✅----✅\n\n\n- Razão Social: {empresa['razao_social']}\n\n- Nome Fantasia: {empresa['nome_fantasia']}\n\n- Status: {empresa['situacao_cadastral']}\n\n- CNPJ: {empresa['cnpj']}\n\n- E-mail: {empresa['email']}\n\n- Atividade principal: {empresa['atividade_principal']}\n\n- Telefone: {empresa['ddd1'] + empresa['telefone1']}\n\n\nDados atualizados em: {empresa['atualizado_em']}\n\nchatbot by: @nsfelipe 🚀™️"""
                     return resposta.upper()
 
                 except:
