@@ -40,7 +40,7 @@ def handle_response(text: str) -> str:
 
         return resposta.upper()
 
-    def requisicao_invalida(tipo: str):
+    def requisicao_invalida(tipo):
         resposta = '⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nNão foi possivel realizar a sua consulta pois o {tipo} informado não é valido.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
 
         return resposta.upper()
@@ -49,7 +49,6 @@ def handle_response(text: str) -> str:
     if '/cnpj' in text:
 
         # Filtra mensagem e busca pelo cnpj informado na API
-        tipo = 'cnpj'
         msg = text.split()
         cnpj = msg[1]
 
@@ -99,7 +98,7 @@ def handle_response(text: str) -> str:
                     return resposta.upper()
 
             else:
-                return requisicao_invalida(tipo)
+                return requisicao_invalida('cnpj')
         
         else:
             return comando_errado()
@@ -107,7 +106,6 @@ def handle_response(text: str) -> str:
     # Busca informações do CEP
     if '/cep' in text:
         
-        tipo = 'cep'
         # Filtra mensagem e busca pelo cep informado na API
         msg = text.split()
         cep = msg[1]  # 34004481
@@ -129,7 +127,7 @@ def handle_response(text: str) -> str:
                     return resposta.upper()
             
             else:
-                return requisicao_invalida(tipo)
+                return requisicao_invalida('cep')
         
         else:
             return comando_errado()
