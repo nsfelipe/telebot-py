@@ -41,7 +41,7 @@ def handle_response(text: str) -> str:
         return resposta.upper()
 
     def requisicao_invalida(tipo):
-        resposta = f'⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nNão foi possivel realizar a sua consulta pois o {self.tipo} informado não é valido.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
+        resposta = f'⚠️------⚠️ ATENÇÃO ⚠️------⚠️\n\n\nNão foi possivel realizar a sua consulta pois o {tipo} informado não é valido.\n\nDigite /info para ver as instruções!\n\n\nchatbot by: @nsfelipe™️'
 
         return resposta.upper()
 
