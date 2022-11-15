@@ -120,7 +120,7 @@ def handle_response(text: str) -> str:
             if resp.status_code == 200:
                 cep_response = json.loads(resp.content)
                 
-                if len(cep_response) != 1:
+                if len(cep_response) == 1:
                     
                     return requisicao_invalida()
                 
