@@ -119,9 +119,14 @@ def handle_response(text: str) -> str:
 
             if resp.status_code == 200:
                 cep_response = json.loads(resp.content)
-
-                resposta = f"""✅----✅ RESULTADO: CEP ✅----✅\n\n\n- CIDADE: {cep_response['localidade']}\n\n- BAIRRO: {cep_response['bairro']}\n\n- ESTADO: {cep_response['uf']}\n\n- LONGRADOURO: {cep_response['logradouro']}\n\n\nchatbot by: @nsfelipe 🚀™️"""
-                return resposta.upper()
+                
+                if len(cep_response) != 1:
+                    
+                    return requisicao_invalida()
+                
+                else:
+                    resposta = f"""✅----✅ RESULTADO: CEP ✅----✅\n\n\n- CIDADE: {cep_response['localidade']}\n\n- BAIRRO: {cep_response['bairro']}\n\n- ESTADO: {cep_response['uf']}\n\n- LONGRADOURO: {cep_response['logradouro']}\n\n\nchatbot by: @nsfelipe 🚀™️"""
+                    return resposta.upper()
             
             else:
                 return requisicao_invalida()
